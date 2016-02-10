@@ -1,0 +1,53 @@
+$(document).ready(function() {
+  console.log('fish.js responding');
+// var getFishes = $('#get-fishes');
+// var getFishes = $('#get-fishes');
+// // var getMba = $('#MBA_Rank')
+// var results = $('#results');
+
+// adding an event listener ti get the fishes button on click
+// getFishesButton.on('click', getFishes);
+// adding even listener to the the mba rank from data.json, which will change whe  the fish type is changed
+// fishSelect.on('change', getMba);
+
+  function getFishes(index, value) {
+    var fish = $(this).val()
+    $.ajax({
+      type: "GET",
+      url: "/fish_data",
+      dataType: "JSON",
+      data: {fish: fish},
+      method: 'POST'
+    })
+    .done(function(response) {
+      var fishes = []; 
+      $('#fishinfo').empty();
+      // $.each(response, function(index, item) {
+      //   if ($.inArray(item.fish, fishes) === -1) {
+      //     fishes.push(item); 
+      //   }
+      // })
+    $.each(response, function(index, fish){
+
+    var image_path = '<%= image_tag "/fish/" %>'
+
+      // console.log(fish)
+      $('#fishinfo').append('<h1>' + fish.Seafood_display_name + '<h2>' + fish.MBA_Rank + '</h2>' + '<h3>' + fish.Mercury_Rank + '</h3>' + '<h4>' + fish.Omega_Level + '</h4>'  + '<p1>' + fish.Description + '</p1>'+ '<p2>' + fish.Fact + '</p2>' + '<img src="/assets/fish/' + fish.Seafood_Item + '.png" />');
+    })
+
+
+
+// '<img src="../../assets/images/fish/' + fish.Seafood_Item + '.png">'
+
+      console.log(fishes, 'fishes');
+    })  
+  }
+  // click event
+  $(".fishname").on('change', getFishes);
+
+
+
+});
+
+
+
